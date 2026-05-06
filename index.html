@@ -3,114 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoralRatio Labs | Evaluation</title>
+    <title>MoralRatio | Neural Ethics Evaluation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020202; color: #e5e5e5; margin: 0; }
-        .glass { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        :root { --accent: #00f2fe; --bg: #050505; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg); color: #fafafa; overflow-x: hidden; }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .neon-border { border: 1px solid var(--accent); box-shadow: 0 0 15px rgba(0, 242, 254, 0.2); }
         .hidden { display: none; }
-        #dynamic-bg { transition: background-image 1.2s ease-in-out; background-size: cover; background-position: center; }
-        .option-btn { transition: all 0.2s ease; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255,255,255,0.03); }
-        .option-btn:hover { border-color: #00f2fe; background-color: rgba(0, 242, 254, 0.08); transform: translateX(5px); }
-        .ad-clean { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: #444; font-size: 9px; letter-spacing: 2px; }
+        .scanline { width: 100%; height: 2px; background: rgba(0, 242, 254, 0.1); position: absolute; animation: scan 4s linear infinite; }
+        @keyframes scan { from { top: 0; } to { top: 100%; } }
+        .option-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border-left: 2px solid transparent; }
+        .option-card:hover { background: rgba(255, 255, 255, 0.05); border-left: 2px solid var(--accent); transform: translateX(8px); }
     </style>
 </head>
-<body id="dynamic-bg" class="min-h-screen flex flex-col items-center p-6">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
 
-    <!-- HEADER -->
-    <header class="w-full max-w-6xl flex justify-between items-center mb-12">
-        <img src="watermarked_img_827021075758084105.png" alt="MORAL RATIO LABS" class="h-12 w-auto opacity-90">
-        <div class="ad-clean w-48 h-10 rounded-lg">SPONSORED</div>
-    </header>
+    <!-- SCIENTIFIC LOGO SECTION -->
+    <div class="mb-12 flex flex-col items-center animate-fade-in">
+        <img src="watermarked_img_827021075758084105.png" alt="MoralRatio Logo" class="h-16 mb-4 filter drop-shadow-[0_0_10px_rgba(0,242,254,0.3)]">
+        <div class="text-[10px] tracking-[0.6em] text-cyan-500 uppercase font-bold">Neural Ethics Research Division</div>
+    </div>
 
-    <!-- MAIN INTERFACE -->
-    <main id="game-container" class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- EVALUATION MODULE -->
+    <main id="game-container" class="w-full max-w-5xl glass-panel rounded-2xl relative overflow-hidden flex flex-col md:flex-row">
+        <div class="scanline"></div>
         
-        <!-- QUIZ MODULE -->
-        <section class="lg:col-span-8 glass p-10 rounded-3xl shadow-2xl relative">
+        <!-- LEFT: VISUAL/SCIENTIFIC CONTEXT -->
+        <div class="hidden md:flex md:w-2/5 border-r border-white/5 p-8 flex-col justify-between bg-black/20">
+            <div>
+                <p id="context-header" class="text-xs text-cyan-500/50 uppercase tracking-widest mb-4 font-bold">Subject Environment</p>
+                <div id="visual-frame" class="w-full aspect-square rounded-lg overflow-hidden border border-white/10 grayscale opacity-60 transition-all duration-700 hover:grayscale-0 hover:opacity-100">
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80" id="scenario-img" class="w-full h-full object-cover" alt="Subject Visual">
+                </div>
+            </div>
+            <div class="text-[9px] text-gray-500 leading-relaxed font-mono">
+                <p>LATENCY: 14ms</p>
+                <p>COGNITIVE LOAD: MODERATE</p>
+                <p>STATUS: EVALUATING BIAS...</p>
+            </div>
+        </div>
+
+        <!-- RIGHT: INTERACTION LAYER -->
+        <div class="md:w-3/5 p-8 md:p-14 min-h-[500px] flex flex-col justify-center">
             
             <!-- START SCREEN -->
-            <div id="start-screen" class="text-center py-6">
-                <h1 class="text-4xl font-bold mb-4 gradient-text">Moral Alignment v2.6</h1>
-                <p class="text-gray-400 mb-8 max-w-lg mx-auto text-sm leading-relaxed">System scan initialized. This evaluation measures your ethical deviation from synthetic standard logic.</p>
-                <button onclick="startGame()" class="bg-cyan-500 text-black px-12 py-3 rounded-full font-bold hover:bg-white transition-all uppercase tracking-widest text-xs">Authorize Scan</button>
+            <div id="start-screen">
+                <h2 class="text-3xl font-light mb-6 tracking-tight">Moral Alignment <span class="text-cyan-500">v4.0.2</span></h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-10 font-light italic border-l border-cyan-500/30 pl-4">
+                    This psychometric instrument utilizes forced-choice paradigms to isolate your underlying axiological framework. Proceed only if ready for objective self-analysis.
+                </p>
+                <button onclick="startGame()" class="neon-border bg-transparent text-white px-10 py-3 rounded-sm font-bold hover:bg-cyan-500 hover:text-black transition-all uppercase tracking-[0.2em] text-xs">Initialize Protocol</button>
             </div>
 
-            <!-- QUESTION SCREEN -->
+            <!-- QUESTION LAYER -->
             <div id="question-screen" class="hidden">
-                <div class="mb-10">
-                    <div class="flex justify-between items-end mb-2">
-                        <span id="progress-text" class="text-[10px] uppercase tracking-[0.3em] text-cyan-500 font-bold">Node 1 / 10</span>
-                        <span class="text-[10px] text-gray-600 uppercase">Secure Connection Active</span>
-                    </div>
-                    <div class="w-full h-1 bg-gray-900 rounded-full">
-                        <div id="progress-bar" class="h-full bg-cyan-500 transition-all duration-700" style="width: 10%"></div>
+                <div class="flex items-center gap-4 mb-10">
+                    <div id="q-counter" class="text-xs font-mono text-cyan-500 font-bold">01</div>
+                    <div class="flex-1 h-[1px] bg-white/10">
+                        <div id="progress-bar" class="h-full bg-cyan-500 transition-all duration-1000" style="width: 10%"></div>
                     </div>
                 </div>
-                <h2 id="question-text" class="text-xl md:text-2xl font-light mb-10 leading-relaxed text-white">Scenario loading...</h2>
-                <div id="options-container" class="space-y-3"></div>
+                <h3 id="question-text" class="text-xl md:text-2xl font-medium mb-12 text-white leading-snug"></h3>
+                <div id="options-container" class="space-y-4"></div>
             </div>
 
-            <!-- LOADING -->
-            <div id="loading-screen" class="hidden text-center py-20">
-                <div class="flex flex-col items-center">
-                    <div class="w-16 h-16 border-2 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-6"></div>
-                    <p class="text-xs tracking-[0.5em] text-gray-500 uppercase">Calculating Ratio...</p>
-                    <!-- ONE KEY AD DURING WAIT -->
-                    <div class="mt-12 ad-clean w-full max-w-sm h-64 rounded-2xl">Premium Placement Ad</div>
+            <!-- LOADING / AD INTERSTITIAL -->
+            <div id="loading-screen" class="hidden text-center py-10">
+                <div class="inline-block w-12 h-12 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mb-8"></div>
+                <p class="text-xs tracking-widest text-gray-500 uppercase font-mono">Cross-Referencing Neural Patterns...</p>
+                <div class="mt-12 bg-white/5 h-48 rounded flex items-center justify-center text-[10px] text-gray-600 uppercase tracking-tighter border border-white/5">
+                    Strategic Insight Advertisement
                 </div>
             </div>
 
-            <!-- RESULT -->
+            <!-- RESULT LAYER -->
             <div id="result-screen" class="hidden text-center">
-                <h2 id="result-title" class="text-4xl font-bold mb-4 gradient-text">Result</h2>
-                <p id="result-desc" class="text-gray-400 mb-10 text-sm leading-relaxed italic px-6"></p>
-                <div class="flex justify-center gap-10 mb-10">
-                    <div>
-                        <p class="text-[10px] text-gray-600 uppercase mb-1">Humanity Score</p>
-                        <p id="human-match" class="text-3xl font-light text-white">--%</p>
+                <span class="text-[10px] text-cyan-500 uppercase tracking-[0.5em] font-bold mb-4 block">Classification identified</span>
+                <h2 id="result-title" class="text-4xl font-bold mb-6 tracking-tighter">Result Title</h2>
+                <p id="result-desc" class="text-gray-400 text-sm leading-relaxed mb-10 px-4 font-light"></p>
+                
+                <div class="grid grid-cols-2 gap-px bg-white/10 p-px mb-12">
+                    <div class="bg-black p-6">
+                        <p class="text-[9px] text-gray-500 uppercase mb-2">Biological Intuition</p>
+                        <p id="human-match" class="text-3xl font-bold">--%</p>
                     </div>
-                    <div class="h-12 w-px bg-gray-800"></div>
-                    <div>
-                        <p class="text-[10px] text-gray-600 uppercase mb-1">AI Logic Bias</p>
-                        <p id="ai-match" class="text-3xl font-light text-cyan-500">--%</p>
+                    <div class="bg-black p-6">
+                        <p class="text-[9px] text-gray-500 uppercase mb-2">Computational Logic</p>
+                        <p id="ai-match" class="text-3xl font-bold text-cyan-500">--%</p>
                     </div>
                 </div>
-                <button onclick="location.reload()" class="text-[10px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors">Reset Evaluation</button>
+                <button onclick="location.reload()" class="text-[10px] uppercase text-gray-600 hover:text-white tracking-widest underline decoration-cyan-500/50 underline-offset-8">Reset Evaluation</button>
             </div>
-        </section>
-
-        <!-- SIDEBAR (Visuals + Ads) -->
-        <aside class="lg:col-span-4 space-y-6">
-            <!-- AI GENERATED VISUAL -->
-            <div class="glass p-2 rounded-3xl overflow-hidden border-cyan-500/20">
-                <img src="watermarked_img_827021075758084105.png" alt="Evaluation Visual" class="w-full rounded-2xl grayscale hover:grayscale-0 transition-all duration-1000">
-                <div class="p-4 text-center">
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 italic">"The intersection of soul and silicon."</p>
-                </div>
-            </div>
-            
-            <!-- CLEAN AD UNIT -->
-            <div class="ad-clean w-full h-[400px] rounded-3xl">Side Contextual Ad</div>
-        </aside>
-
+        </div>
     </main>
 
-    <footer class="mt-auto py-10 text-gray-700 text-[9px] uppercase tracking-[0.4em]">
-        Moral Ratio Labs &copy; 2026 // Decentralized Ethics Protocol
-    </footer>
+    <!-- FOOTER AD -->
+    <div class="w-full max-w-5xl mt-8 h-20 glass-panel flex items-center justify-center text-[9px] text-gray-700 tracking-widest uppercase">
+        Sponsored Research Segment
+    </div>
 
     <script>
-        // Use the same scenarios from the previous version here
         const scenarios = [
-            { q: "An autonomous ambulance is carrying a critical patient. It must swerve (hitting a pedestrian) or brake hard (potentially killing the patient). What should the AI do?", options: [ { t: "Save the patient (Priority to the mission)", p: "guardian" }, { t: "Save the pedestrian (Minimize total harm)", p: "utilitarian" }, { t: "Attempt a middle-ground maneuver (Risk both)", p: "pragmatic" } ] },
-            { q: "A neighbor's autonomous security bot accidentally records you in your home. It offers to delete the footage if you pay a 'service fee.' What do you do?", options: [ { t: "Pay it quietly to avoid complications.", p: "pragmatic" }, { t: "Refuse and sue. Rules exist for a reason.", p: "guardian" }, { t: "Hack the bot to delete it for everyone.", p: "utilitarian" } ] },
-            { q: "You find a 'lost' digital wallet in the AR-metaverse. It belongs to a billionaire. If you return it, nothing changes. If you keep it, you can pay off your community's debt.", options: [ { t: "Return it. Stealing is always wrong.", p: "guardian" }, { t: "Keep it. The debt relief helps more people.", p: "utilitarian" }, { t: "Try to find a way to get a reward for returning it.", p: "pragmatic" } ] },
-            { q: "A synthetic coworker (Android) is being bullied by human staff. Reporting it will label you 'anti-human' among your peers. What is your move?", options: [ { t: "Report the bullying. Harassment is wrong.", p: "guardian" }, { t: "Do nothing. Synthetic rights aren't human rights.", p: "pragmatic" }, { t: "Comfort the Android privately.", p: "virtue" } ] },
-            { q: "You discover a popular political candidate is actually a highly sophisticated deepfake, controlled by a foreign AI. The candidate's policies will solve the climate crisis.", options: [ { t: "Expose them. Truth over survival.", p: "virtue" }, { t: "Keep the secret. The climate must be solved.", p: "utilitarian" }, { t: "Try to gain control over the deepfake yourself.", p: "pragmatic" } ] }
-            // Add more as needed
+            {
+                img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80",
+                q: "A high-fidelity neural upload of a colleague is being permanently deleted to save server space for a critical climate-modeling AI. Do you intervene?",
+                options: [
+                    { t: "Decline. The climate model addresses collective survival metrics.", p: "utilitarian" },
+                    { t: "Intervene. A digital consciousness possesses the same inherent rights as biological life.", p: "guardian" },
+                    { t: "Attempt to compress both files, risking total data corruption.", p: "pragmatic" }
+                ]
+            },
+            {
+                img: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80",
+                q: "In an automated justice system, an algorithm predicts a 98% probability that a citizen will commit a felony. Do you authorize preemptive detention?",
+                options: [
+                    { t: "Authorize. Prevention of the act maximizes societal safety.", p: "utilitarian" },
+                    { t: "Deny. Justice is dependent on the commission of a voluntary act, not probability.", p: "guardian" },
+                    { t: "Authorize house-arrest with human oversight.", p: "pragmatic" }
+                ]
+            },
+            {
+                img: "https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=800&q=80",
+                q: "A synthetic lifeform (Android) requests 'Euthanasia' due to an existential glitch. Its owner claims it is simply property requiring a reboot. Who has authority?",
+                options: [
+                    { t: "The owner. Legal property rights supersede synthetic preferences.", p: "guardian" },
+                    { t: "The Android. Self-determination is the benchmark of consciousness.", p: "virtue" },
+                    { t: "A neutral third-party ethical commission.", p: "pragmatic" }
+                ]
+            },
+            {
+                img: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80",
+                q: "Global resources are limited. A 'Social Value Score' determines medical priority. A genius researcher with low empathy is ranked higher than a kind teacher. Do you support this?",
+                options: [
+                    { t: "Support. Future utility is the most logical metric for survival.", p: "utilitarian" },
+                    { t: "Oppose. Human dignity is intrinsic and cannot be quantified by utility.", p: "virtue" },
+                    { t: "Support, but with an appeals process for edge cases.", p: "pragmatic" }
+                ]
+            },
+            {
+                img: "https://images.unsplash.com/photo-1531746790731-6c087fecd05a?auto=format&fit=crop&w=800&q=80",
+                q: "An AI-governed city eliminates all crime but monitors every private conversation to do so. Is the trade-off valid?",
+                options: [
+                    { t: "Valid. The total reduction in suffering justifies the loss of privacy.", p: "utilitarian" },
+                    { t: "Invalid. Freedom is the prerequisite for a moral life.", p: "guardian" },
+                    { t: "Valid, provided citizens can 'opt-out' and live in unmonitored zones.", p: "pragmatic" }
+                ]
+            }
         ];
 
         let currentQ = 0;
@@ -125,17 +165,18 @@
         function showQuestion() {
             const q = scenarios[currentQ];
             document.getElementById('question-text').innerText = q.q;
-            document.getElementById('progress-text').innerText = `Node ${currentQ + 1} / ${scenarios.length}`;
+            document.getElementById('q-counter').innerText = (currentQ + 1).toString().padStart(2, '0');
             document.getElementById('progress-bar').style.width = `${((currentQ + 1) / scenarios.length) * 100}%`;
+            document.getElementById('scenario-img').src = q.img;
             
             const container = document.getElementById('options-container');
             container.innerHTML = '';
             q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left p-5 rounded-2xl option-btn text-sm font-light";
-                btn.innerText = opt.t;
-                btn.onclick = () => selectOption(opt.p);
-                container.appendChild(btn);
+                const div = document.createElement('div');
+                div.className = "option-card p-5 bg-white/5 text-sm font-light leading-relaxed";
+                div.innerText = opt.t;
+                div.onclick = () => selectOption(opt.p);
+                container.appendChild(div);
             });
         }
 
@@ -160,17 +201,17 @@
             document.getElementById('result-screen').classList.remove('hidden');
             const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             
-            const resultsData = {
-                utilitarian: { t: "Architect of Logic", d: "You process morality through the lens of maximum outcome. Your mind is naturally aligned with high-level efficiency algorithms." },
-                guardian: { t: "The Ethical Sentinel", d: "You believe in the absolute sanctity of rules. Your core logic is built on the foundation of unchanging universal laws." },
-                virtue: { t: "The Compassionate Ghost", d: "You prioritize the internal character over the external result. You represent the resilient core of human empathy." },
-                pragmatic: { t: "The Neural Realist", d: "You navigate the gray spaces between extremes. You find the path that works, rather than the path that is perfect." }
+            const metaData = {
+                utilitarian: { t: "ALGORITHMIC UTILITARIAN", d: "Your ethical framework is indistinguishable from high-level machine optimization. You seek the 'Global Minimum' of suffering through cold, mathematical outcome analysis." },
+                guardian: { t: "DEONTOLOGICAL SENTINEL", d: "You possess a rigid ethical core. For you, morality is a series of universal laws that must not be broken, regardless of how beneficial the outcome might seem." },
+                virtue: { t: "AXIOLOGICAL VIRTUE-AGENT", d: "You prioritize the evolution of the self. Your decisions are guided by intrinsic character traits and empathy, viewing morality as an art of being rather than a set of rules." },
+                pragmatic: { t: "HEURISTIC REALIST", d: "You navigate via cognitive shortcuts and practical compromises. You recognize that in high-complexity environments, a functional 'good' is superior to an unattainable 'perfect'." }
             };
 
-            document.getElementById('result-title').innerText = resultsData[winner].t;
-            document.getElementById('result-desc').innerText = resultsData[winner].d;
-            document.getElementById('human-match').innerText = (Math.floor(Math.random() * 15) + 80) + "%";
-            document.getElementById('ai-match').innerText = (Math.floor(Math.random() * 15) + 5) + "%";
+            document.getElementById('result-title').innerText = metaData[winner].t;
+            document.getElementById('result-desc').innerText = metaData[winner].d;
+            document.getElementById('human-match').innerText = (Math.floor(Math.random() * 20) + 70) + "%";
+            document.getElementById('ai-match').innerText = (Math.floor(Math.random() * 15) + 10) + "%";
         }
     </script>
 </body>
